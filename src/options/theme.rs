@@ -110,9 +110,9 @@ fn detect_color_mode() -> Option<ColorMode> {
 
 impl From<terminal_colorsaurus::ColorScheme> for ColorMode {
     fn from(value: terminal_colorsaurus::ColorScheme) -> Self {
-        match value {
-            terminal_colorsaurus::ColorScheme::Dark => ColorMode::Dark,
-            terminal_colorsaurus::ColorScheme::Light => ColorMode::Light,
+        match value.is_dark_on_light() {
+            false => ColorMode::Dark,
+            true => ColorMode::Light,
         }
     }
 }
