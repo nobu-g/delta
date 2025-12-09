@@ -18,7 +18,7 @@ use std::io::{stdout, IsTerminal};
 use bat;
 use bat::assets::HighlightingAssets;
 #[cfg(not(test))]
-use terminal_colorsaurus::{color_scheme, QueryOptions};
+use terminal_colorsaurus::{color_palette, QueryOptions};
 
 use crate::cli::{self, DetectDarkLight};
 use crate::color::{ColorMode, ColorMode::*};
@@ -103,16 +103,18 @@ fn should_detect_color_mode(opt: &cli::Opt) -> bool {
 
 #[cfg(not(test))]
 fn detect_color_mode() -> Option<ColorMode> {
-    color_scheme(QueryOptions::default())
-        .ok()
-        .map(ColorMode::from)
+    let palette = color_palette(QueryOptions::default());
+    match palette {
+        Ok(palette) => Some(ColorMode::from(palette.color_scheme())),
+        Err(_) => None,
+    }
 }
 
 impl From<terminal_colorsaurus::ColorScheme> for ColorMode {
     fn from(value: terminal_colorsaurus::ColorScheme) -> Self {
-        match value.is_dark_on_light() {
-            false => ColorMode::Dark,
-            true => ColorMode::Light,
+        match value {
+            terminal_colorsaurus::ColorScheme::Dark => ColorMode::Dark,
+            terminal_colorsaurus::ColorScheme::Light => ColorMode::Light,
         }
     }
 }

@@ -53,10 +53,13 @@ smol_str = "0.1.24"
 syntect = "5.0.0"
 # sysinfo: no default features to disable the use of threads
 sysinfo = { version = "0.29.0", default-features = false, features = [] }
-terminal-colorsaurus = "0.3.4"
+#terminal-colorsaurus = "0.3.4"
 # この diff のどこかでバグが混入した
 # https://github.com/bash/terminal-colorsaurus/compare/0.3.4...0.4.0
-# terminal-colorsaurus = { git = "https://github.com/bash/terminal-colorsaurus", rev = "f5646ebdfd431a3cee072ec52c14e41d7825c927" }
+# -> 27ce6daa573c6d0039a3c4fc3d14b238b813c86e のコミットが原因
+# さらにこれが関係？：https://github.com/bash/terminal-colorsaurus/commit/27ce6daa573c6d0039a3c4fc3d14b238b813c86e#diff-1adef1fbc940227b8fb83785be830bfa8bdc22fae02df113d69494df670d46fdR80
+# 直前のコミットを使うようにしておく
+terminal-colorsaurus = { git = "https://github.com/bash/terminal-colorsaurus", rev = "25fd7f00abcd10233801cdd668f7213048f0c8b8" }
 unicode-segmentation = "1.10.1"
 unicode-width = "=0.1.12"
 xdg = "2.4.1"
